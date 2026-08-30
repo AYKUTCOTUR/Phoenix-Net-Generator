@@ -31,10 +31,10 @@ body:
     attributes:
       label: Should the engineer explicitly approve the result?
       options:
-        - Yes
-        - No
-        - Not applicable
-        - Unsure
+        - "Yes"
+        - "No"
+        - "Not applicable"
+        - "Unsure"
     validations:
       required: true
 
