@@ -51,13 +51,22 @@ Enable / Disable Individual Pins
 Generate Net Label Bank
 ```
 
-## Example
+## Example: ATmega328P-AU
+
+The example below uses an ATmega328P-AU with multifunction pin names directly from the schematic symbol.
+
+<p align="center">
+  <img src="docs/images/01-target-component.png" width="780" alt="ATmega328P-AU target component in Altium Designer">
+</p>
+
+<p align="center">
+  <em>Example target component in Altium Designer before semantic labeling.</em>
+</p>
 
 A library pin such as:
 
 ```text
 (PCINT6/XTAL1/TOSC1)_PB6
-```
 
 is parsed into selectable functions:
 
