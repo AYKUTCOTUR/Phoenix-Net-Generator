@@ -1,0 +1,81 @@
+name: Bug report
+description: Report a reproducible Phoenix Net Generator problem
+title: "[Bug]: "
+labels:
+  - bug
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for helping improve Phoenix. Do not upload proprietary schematics or confidential design data.
+
+  - type: input
+    id: version
+    attributes:
+      label: Phoenix version
+      placeholder: "0.4.4"
+    validations:
+      required: true
+
+  - type: input
+    id: altium
+    attributes:
+      label: Altium Designer version
+      placeholder: "Example: 24.x"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: stage
+    attributes:
+      label: Failure stage
+      options:
+        - Script startup
+        - Analyze
+        - Pin parsing
+        - Function selection
+        - Prefix / preview
+        - YES / NO control
+        - Wire margin input
+        - Generate Net Labels
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Steps to reproduce
+      description: Provide the smallest reproducible sequence.
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior / exact error
+      description: Include exact DelphiScript error text and line number when available.
+    validations:
+      required: true
+
+  - type: input
+    id: pin
+    attributes:
+      label: Example pin name
+      description: If parser-related, provide the exact public/non-confidential pin string.
+      placeholder: "(PCINT6/XTAL1/TOSC1)_PB6"
+
+  - type: checkboxes
+    id: safety
+    attributes:
+      label: Data safety
+      options:
+        - label: I have removed proprietary or confidential design information.
+          required: true
