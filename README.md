@@ -77,6 +77,17 @@ TOSC1
 PB6
 ```
 
+### Analyze and Select Functions
+
+<p align="center">
+  <img src="docs/images/02-phoenix-analysis-ui.png" width="1000"
+       alt="Phoenix Net Generator analyzing ATmega328P-AU multifunction pins">
+</p>
+
+<p align="center">
+  <em>Phoenix parses multifunction pin names and lets the engineer select the intended function before generation.</em>
+</p>
+
 The engineer decides which function is actually used. For example:
 
 ```text
