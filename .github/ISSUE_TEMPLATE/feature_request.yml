@@ -1,0 +1,44 @@
+name: Feature request
+description: Propose a focused improvement
+title: "[Feature]: "
+labels:
+  - enhancement
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Engineering problem
+      description: What repetitive or error-prone workflow should this improve?
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed behavior
+      description: Describe the expected user workflow.
+    validations:
+      required: true
+
+  - type: textarea
+    id: examples
+    attributes:
+      label: Pin or naming examples
+      description: Include public/non-confidential examples when relevant.
+
+  - type: dropdown
+    id: decision
+    attributes:
+      label: Should the engineer explicitly approve the result?
+      options:
+        - Yes
+        - No
+        - Not applicable
+        - Unsure
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
