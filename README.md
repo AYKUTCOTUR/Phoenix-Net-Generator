@@ -70,7 +70,6 @@ A library pin such as:
 
 is parsed into selectable functions:
 
-```text
 PCINT6
 XTAL1
 TOSC1
