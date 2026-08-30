@@ -1,0 +1,12 @@
+cff-version: 1.2.0
+message: "If you use Phoenix Net Generator in published work, please cite the repository and release version."
+title: "Phoenix Net Generator"
+version: "0.4.4"
+date-released: "2026-08-30"
+license: "Apache-2.0"
+type: software
+repository-code: "https://github.com/AYKUTCOTUR/Phoenix-Net-Generator"
+url: "https://github.com/AYKUTCOTUR/Phoenix-Net-Generator"
+authors:
+  - family-names: "Çotur"
+    given-names: "Aykut"
