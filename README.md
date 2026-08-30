@@ -3,31 +3,42 @@
 [![Version](https://img.shields.io/badge/version-0.4.4-blue.svg)](https://github.com/AYKUTCOTUR/Phoenix-Net-Generator/releases)
 [![License](https://img.shields.io/badge/license-Apache--2.0-green.svg)](https://github.com/AYKUTCOTUR/Phoenix-Net-Generator/blob/main/LICENSE)
 [![Altium Designer](https://img.shields.io/badge/Altium%20Designer-DelphiScript-orange.svg)](https://github.com/AYKUTCOTUR/Phoenix-Net-Generator)
+[![Status](https://img.shields.io/badge/status-working%20prototype-yellow.svg)](https://github.com/AYKUTCOTUR/Phoenix-Net-Generator)
 
 **Engineer-in-the-loop semantic net generation for Altium Designer.**
 
-Phoenix Net Generator is an experimental Altium Designer automation tool that reads component pins, parses multifunction pin names, lets the engineer choose the intended function, previews a structured net name, and generates an organized bank of schematic Net Labels.
+Phoenix Net Generator is an experimental Altium Designer automation tool that reads schematic component pins, parses multifunction pin names, lets the engineer choose the intended function, previews structured semantic net names, and generates an organized bank of schematic Net Labels.
 
-> Phoenix is designed to automate repetitive work without making hidden electrical decisions on behalf of the engineer.
+> Phoenix is designed to automate repetitive schematic work without making hidden electrical decisions on behalf of the engineer.
+
+---
 
 ## Highlights
 
 - Analyze a schematic component by designator
 - Read visible pins directly from the active `.SchDoc`
 - Parse multifunction pin names such as `(PCINT6/XTAL1/TOSC1)_PB6`
-- Select the intended pin function through the UI
+- Let the engineer select the intended pin function through the UI
 - Generate semantic names such as `U1_SPI1_MISO`, `U1_UART1_TX`, or `U1_CLK_XTAL1`
-- Use the component designator, a custom prefix, or no prefix
+- Use the component designator as the default prefix
+- Replace the default prefix with a custom prefix such as `MCU`, `CTRL`, or `MAIN`
+- Disable prefixing when no prefix is desired
 - Toggle individual pins between **YES** and **NO**
-- Type custom function names when the library metadata is insufficient
-- Configure wire space before and after the Net Label
-- Generate a clean, equal-length label bank with 15 rows per column
+- Exclude disabled pins from Net Label generation
+- Enter custom function names when library metadata is insufficient
+- Configure wire margins before and after the Net Label
+- Generate equal-length label-bank wires based on the widest generated Net Label
+- Organize the output bank in 15 rows per column
+
+---
 
 ## Current Version
 
 **v0.4.4**
 
-Phoenix is currently a working prototype and is under active development. It is not yet a fully autonomous schematic or PCB design system.
+Phoenix is currently a working prototype under active development. It is not yet a fully autonomous schematic or PCB design system.
+
+---
 
 ## Workflow
 
@@ -48,8 +59,12 @@ Preview
         ↓
 Enable / Disable Individual Pins
         ↓
+Configure Wire Margins
+        ↓
 Generate Net Label Bank
 ```
+
+---
 
 ## Example: ATmega328P-AU
 
@@ -79,7 +94,11 @@ TOSC1
 PB6
 ```
 
-### Analyze and Select Functions
+---
+
+## Analyze and Select Functions
+
+After the component is analyzed, Phoenix displays the visible pins, parsed function choice, and the resulting Net Name Preview.
 
 <p align="center">
   <img src="docs/images/02-phoenix-analysis-ui.png" width="1000"
@@ -87,10 +106,12 @@ PB6
 </p>
 
 <p align="center">
-  <em>Phoenix parses multifunction pin names and lets the engineer select the intended function before generation.</em>
+  <em>Phoenix reads the component pins and prepares engineer-reviewable semantic net-name previews.</em>
 </p>
 
-The engineer decides which function is actually used. For example:
+The engineer decides which function is actually intended for the design.
+
+For example:
 
 ```text
 XTAL1 → U1_CLK_XTAL1
@@ -112,34 +133,88 @@ AVCC  → PWR_AVCC
 AREF  → ADC_AREF
 ```
 
-<!--
-Uncomment this section after docs/images/03-function-selection.png is added.
+---
 
-### Engineer-Controlled Function Selection
+## Engineer-Controlled Function Selection
+
+A multifunction pin describes what the silicon **can** do. It does not describe what the engineer **intends** to use in a specific project.
+
+Phoenix therefore exposes the parsed alternatives and keeps the final selection under engineer control.
 
 <p align="center">
-  <img src="docs/images/03-function-selection.png" width="900"
+  <img src="docs/images/03-function-selection.png" width="1000"
        alt="Phoenix multifunction pin function selection">
 </p>
 
 <p align="center">
-  <em>The available silicon functions are parsed automatically, while the final design intent remains under engineer control.</em>
+  <em>The available pin functions are parsed automatically while the final design intent remains under engineer control.</em>
 </p>
--->
 
-## Net Label Bank
+The prefix is also configurable. By default, Phoenix uses the component designator, for example:
 
-The default output-bank geometry is:
+```text
+U1_SPI1_MISO
+```
 
-| Setting | Default |
-| --- | ---: |
-| Rows per column | 15 |
-| Vertical row pitch | 200 mil |
-| Wire margin before label | 200 mil |
-| Wire margin after label | 200 mil |
-| Column gap | 600 mil |
+The engineer can replace the prefix with a custom value such as:
 
-All generated wires use the same length:
+```text
+MCU_SPI1_MISO
+CTRL_UART1_TX
+MAIN_I2C1_SDA
+```
+
+or disable prefixing when a prefix is not required.
+
+---
+
+## Per-Pin Generation Control
+
+Not every visible pin needs a generated Net Label.
+
+Each pin can be individually toggled between:
+
+```text
+YES
+NO
+```
+
+Pins marked **NO** are excluded from generation.
+
+<p align="center">
+  <img src="docs/images/04-use-toggle.png" width="1000"
+       alt="Phoenix per-pin YES and NO generation control">
+</p>
+
+<p align="center">
+  <em>Individual pins can be excluded from Net Label generation without affecting the remaining analyzed pins.</em>
+</p>
+
+This allows the engineer to suppress unused, intentionally omitted, or separately handled pins before generation.
+
+---
+
+## Configurable Wire Margins
+
+Phoenix lets the engineer independently configure the wire space before and after the Net Label.
+
+<p align="center">
+  <img src="docs/images/05-wire-margins.png" width="1000"
+       alt="Phoenix configurable wire margins before and after Net Labels">
+</p>
+
+<p align="center">
+  <em>Wire margins before and after the Net Label are independently configurable in mil.</em>
+</p>
+
+Example:
+
+```text
+Before = 200 mil
+After  = 400 mil
+```
+
+The generated common wire length is calculated from:
 
 ```text
 Common Wire Length
@@ -151,35 +226,85 @@ Before Margin
 After Margin
 ```
 
-The `Before` and `After` margins are user-configurable in mil.
+This keeps the generated label bank visually aligned while still allowing the layout spacing to be adapted to the schematic.
 
-<!--
-Uncomment this section after docs/images/04-generated-label-bank.png is added.
+---
 
-### Generated Net Label Bank
+## Generated Net Label Bank
+
+The default output-bank geometry is:
+
+| Setting | Default |
+| --- | ---: |
+| Rows per column | 15 |
+| Vertical row pitch | 200 mil |
+| Wire margin before label | 200 mil |
+| Wire margin after label | 200 mil |
+| Column gap | 600 mil |
+
+The final output is an organized bank of real Altium schematic Net Labels placed on equal-length schematic wires.
 
 <p align="center">
-  <img src="docs/images/04-generated-label-bank.png" width="1000"
+  <img src="docs/images/06-generated-label-bank.png" width="1000"
        alt="Generated Phoenix semantic Net Label bank in Altium Designer">
 </p>
 
 <p align="center">
-  <em>Phoenix generates an organized Net Label bank using equal-length wires and user-configurable margins.</em>
+  <em>Generated semantic Net Label bank with structured naming across clock, SPI, UART, I²C, ADC, power, and control signals.</em>
 </p>
--->
+
+---
+
+## Important Electrical Note
+
+Phoenix generates **real schematic Net Labels**.
+
+Therefore:
+
+```text
+U1_GND
+```
+
+and:
+
+```text
+GND
+```
+
+are electrically different net names.
+
+Likewise, prefixed power names such as:
+
+```text
+U1_PWR_VCC
+U1_PWR_AVCC
+```
+
+should only be used when that naming is electrically appropriate for the design.
+
+Phoenix intentionally leaves this decision to the engineer.
+
+---
 
 ## Installation
 
 See **[docs/installation.md](docs/installation.md)** for the full installation procedure.
 
-Quick start:
+### Quick Start
 
 1. Download or clone the repository.
 2. Open `PhoenixNetGenerator.PrjScr` in Altium Designer.
 3. Open the target schematic document (`.SchDoc`).
 4. Run the `PhoenixNetGenerator` procedure.
+5. Enter the target component designator.
+6. Click **Analyze**.
+7. Review the detected pins and selected functions.
+8. Change any required functions, prefixes, YES/NO states, or wire margins.
+9. Click **Generate Net Labels**.
 
-If your Altium version does not automatically associate the Script Form resource, follow the manual form setup described in `docs/installation.md`.
+If your Altium Designer version does not automatically associate the Script Form resource, follow the manual form setup described in `docs/installation.md`.
+
+---
 
 ## Usage
 
@@ -192,19 +317,21 @@ U1
 → Analyze
 → Review pins
 → Select functions
-→ Toggle unused pins to NO
 → Configure prefix
+→ Toggle unused pins to NO
 → Configure wire margins
 → Generate Net Labels
 ```
+
+---
 
 ## Design Philosophy
 
 Phoenix intentionally separates **device capability** from **design intent**.
 
-A multifunction pin tells us what the silicon *can* do. It does not tell us what the engineer *intends* to do in a specific project.
+A multifunction pin tells us what the silicon can do. It does not tell us what the engineer intends to do in a specific project.
 
-Phoenix therefore follows an engineer-in-the-loop model:
+Phoenix follows an engineer-in-the-loop model:
 
 ```text
 Software discovers possibilities
@@ -216,7 +343,11 @@ Engineer defines intent
 Software generates the result
 ```
 
-Phoenix also intentionally avoids automatically wiring generated labels to arbitrary component symbols. Symbol geometry varies widely between libraries, and automatic connectivity changes should not be based on uncertain geometric assumptions.
+Phoenix also intentionally avoids automatically wiring generated labels directly to arbitrary component symbols.
+
+Schematic-symbol geometry varies widely between libraries, and automatic connectivity changes should not be based on uncertain geometric assumptions.
+
+---
 
 ## Supported Semantic Rules
 
@@ -234,6 +365,8 @@ The current prototype includes rules for common functions and selected device fa
 
 See **[docs/naming-rules.md](docs/naming-rules.md)** for details and limitations.
 
+---
+
 ## Repository Structure
 
 ```text
@@ -250,7 +383,9 @@ Phoenix-Net-Generator/
 │   │   ├── 01-target-component.png
 │   │   ├── 02-phoenix-analysis-ui.png
 │   │   ├── 03-function-selection.png
-│   │   └── 04-generated-label-bank.png
+│   │   ├── 04-use-toggle.png
+│   │   ├── 05-wire-margins.png
+│   │   └── 06-generated-label-bank.png
 │   ├── architecture.md
 │   ├── compatibility.md
 │   ├── installation.md
@@ -281,11 +416,11 @@ Phoenix-Net-Generator/
 └── VERSION
 ```
 
-> `03-function-selection.png` and `04-generated-label-bank.png` are optional until the corresponding screenshots are added.
+---
 
 ## Roadmap
 
-Near-term areas of development include:
+Near-term development areas include:
 
 - broader component-family recognition
 - user-defined naming profiles
@@ -305,14 +440,19 @@ Long-term research direction:
 
 See **[docs/roadmap.md](docs/roadmap.md)**.
 
+---
+
 ## Current Limitations
 
 - Pin parsing depends on the quality and structure of schematic-library pin names.
 - Semantic rules do not yet cover every IC family or naming convention.
-- Interface numbering such as `SPI1` or `UART1` may need user customization in some designs.
+- Interface numbering such as `SPI1` or `UART1` may require user customization in some designs.
 - Generated labels are not automatically connected to component pins.
+- Prefixed power nets are electrically distinct from global power nets unless explicitly connected.
 - Compatibility across every Altium Designer release has not yet been validated.
 - Generated results must be reviewed by the engineer before use in production designs.
+
+---
 
 ## Contributing
 
@@ -329,11 +469,17 @@ Useful contributions include:
 - UI improvements
 - documentation improvements
 
+---
+
 ## Security and Safety
 
-Phoenix modifies schematic documents by creating Altium schematic primitives. Test new releases on a copy of your project and review generated labels before relying on them.
+Phoenix modifies schematic documents by creating Altium schematic primitives.
+
+Test new releases on a copy of your project or under version control, and review generated Net Labels before relying on them in production designs.
 
 Please see **[SECURITY.md](SECURITY.md)** for vulnerability reporting.
+
+---
 
 ## Author
 
@@ -343,13 +489,19 @@ GitHub: [@AYKUTCOTUR](https://github.com/AYKUTCOTUR)
 
 Phoenix Net Generator was created and is maintained by Aykut Çotur.
 
+---
+
 ## License
 
 Licensed under the **Apache License 2.0**. See [LICENSE](LICENSE).
 
+---
+
 ## Trademark Notice
 
-Altium and Altium Designer are trademarks or registered trademarks of their respective owner. Phoenix Net Generator is an independent open-source project and is not affiliated with, endorsed by, or sponsored by Altium.
+Altium and Altium Designer are trademarks or registered trademarks of their respective owner.
+
+Phoenix Net Generator is an independent open-source project and is not affiliated with, endorsed by, or sponsored by Altium.
 
 ---
 
