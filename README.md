@@ -2,7 +2,7 @@
 
 [![Version](https://img.shields.io/badge/version-0.4.4-blue.svg)](https://github.com/AYKUTCOTUR/Phoenix-Net-Generator/releases)
 [![License](https://img.shields.io/badge/license-Apache--2.0-green.svg)](https://github.com/AYKUTCOTUR/Phoenix-Net-Generator/blob/main/LICENSE)
-[![Altium](https://img.shields.io/badge/Altium%20Designer-DelphiScript-orange.svg)](https://github.com/AYKUTCOTUR/Phoenix-Net-Generator)
+[![Altium Designer](https://img.shields.io/badge/Altium%20Designer-DelphiScript-orange.svg)](https://github.com/AYKUTCOTUR/Phoenix-Net-Generator)
 
 **Engineer-in-the-loop semantic net generation for Altium Designer.**
 
@@ -56,7 +56,8 @@ Generate Net Label Bank
 The example below uses an ATmega328P-AU with multifunction pin names directly from the schematic symbol.
 
 <p align="center">
-  <img src="docs/images/01-target-component.png" width="780" alt="ATmega328P-AU target component in Altium Designer">
+  <img src="docs/images/01-target-component.png" width="780"
+       alt="ATmega328P-AU target component in Altium Designer">
 </p>
 
 <p align="center">
@@ -67,9 +68,11 @@ A library pin such as:
 
 ```text
 (PCINT6/XTAL1/TOSC1)_PB6
+```
 
 is parsed into selectable functions:
 
+```text
 PCINT6
 XTAL1
 TOSC1
@@ -109,6 +112,21 @@ AVCC  → PWR_AVCC
 AREF  → ADC_AREF
 ```
 
+<!--
+Uncomment this section after docs/images/03-function-selection.png is added.
+
+### Engineer-Controlled Function Selection
+
+<p align="center">
+  <img src="docs/images/03-function-selection.png" width="900"
+       alt="Phoenix multifunction pin function selection">
+</p>
+
+<p align="center">
+  <em>The available silicon functions are parsed automatically, while the final design intent remains under engineer control.</em>
+</p>
+-->
+
 ## Net Label Bank
 
 The default output-bank geometry is:
@@ -135,16 +153,19 @@ After Margin
 
 The `Before` and `After` margins are user-configurable in mil.
 
-## Screenshots
-
-Project screenshots are stored in `docs/images/`.
-
 <!--
-Uncomment these links after final v0.4.4 screenshots are added:
+Uncomment this section after docs/images/04-generated-label-bank.png is added.
 
-![Phoenix UI](docs/images/phoenix-ui-v0.4.4.png)
+### Generated Net Label Bank
 
-![Generated Net Label bank](docs/images/generated-label-bank-v0.4.4.png)
+<p align="center">
+  <img src="docs/images/04-generated-label-bank.png" width="1000"
+       alt="Generated Phoenix semantic Net Label bank in Altium Designer">
+</p>
+
+<p align="center">
+  <em>Phoenix generates an organized Net Label bank using equal-length wires and user-configurable margins.</em>
+</p>
 -->
 
 ## Installation
@@ -220,9 +241,16 @@ Phoenix-Net-Generator/
 ├── .github/
 │   ├── CODEOWNERS
 │   ├── ISSUE_TEMPLATE/
+│   │   ├── bug_report.yml
+│   │   ├── config.yml
+│   │   └── feature_request.yml
 │   └── pull_request_template.md
 ├── docs/
 │   ├── images/
+│   │   ├── 01-target-component.png
+│   │   ├── 02-phoenix-analysis-ui.png
+│   │   ├── 03-function-selection.png
+│   │   └── 04-generated-label-bank.png
 │   ├── architecture.md
 │   ├── compatibility.md
 │   ├── installation.md
@@ -244,6 +272,7 @@ Phoenix-Net-Generator/
 ├── CODE_OF_CONDUCT.md
 ├── CONTRIBUTING.md
 ├── LICENSE
+├── MANIFEST.md
 ├── NOTICE
 ├── README.md
 ├── RELEASE_NOTES_v0.4.4.md
@@ -251,6 +280,8 @@ Phoenix-Net-Generator/
 ├── THIRD_PARTY_NOTICES.md
 └── VERSION
 ```
+
+> `03-function-selection.png` and `04-generated-label-bank.png` are optional until the corresponding screenshots are added.
 
 ## Roadmap
 
@@ -303,7 +334,6 @@ Useful contributions include:
 Phoenix modifies schematic documents by creating Altium schematic primitives. Test new releases on a copy of your project and review generated labels before relying on them.
 
 Please see **[SECURITY.md](SECURITY.md)** for vulnerability reporting.
-
 
 ## Author
 
