@@ -270,6 +270,7 @@ For this specific test scenario, Phoenix reduced the task duration by approximat
 
 The measured benefit comes primarily from reducing repetitive operations such as interpreting multifunction pin names, preparing structured Net Label names, and generating the resulting schematic label bank.
 
+---
 
 ## Important Electrical Note
 
