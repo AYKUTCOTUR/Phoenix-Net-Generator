@@ -255,6 +255,22 @@ The final output is an organized bank of real Altium schematic Net Labels placed
 
 ---
 
+## Initial Workflow Benchmark
+
+To get an initial sense of the practical productivity gain, the same Net Label preparation workflow was performed once manually and once using Phoenix Net Generator v0.4.4.
+
+| Workflow | Completion Time |
+| --- | ---: |
+| Manual workflow | 149.2 s |
+| Phoenix-assisted workflow | 58.3 s |
+
+For this specific test scenario, Phoenix reduced the task duration by approximately **61%**, saving about **91 seconds** and completing the workflow roughly **2.56× faster**.
+
+> This is an initial single-scenario benchmark, not a generalized performance claim. Actual time savings will vary depending on component complexity, pin count, naming conventions, and the engineer's workflow.
+
+The measured benefit comes primarily from reducing repetitive operations such as interpreting multifunction pin names, preparing structured Net Label names, and generating the resulting schematic label bank.
+
+
 ## Important Electrical Note
 
 Phoenix generates **real schematic Net Labels**.
