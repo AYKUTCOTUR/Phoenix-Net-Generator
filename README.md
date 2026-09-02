@@ -13,6 +13,22 @@ Phoenix Net Generator is an experimental Altium Designer automation tool that re
 
 ---
 
+## Why Phoenix?
+
+Modern microcontrollers and complex ICs often expose multiple possible functions on a single pin. During schematic development, the engineer must interpret those functions, select the intended use, create meaningful Net Label names, and repeat the same process across many pins.
+
+**Phoenix Net Generator was built to reduce this repetitive work without taking electrical design decisions away from the engineer.** Instead of guessing design intent, Phoenix assists the engineer in turning multifunction pin capabilities into structured, reviewable semantic Net Labels.
+
+The goal is not full autonomous schematic design. It is a more practical form of automation: **let software handle repetitive operations while keeping engineering intent explicit, reviewable, and under human control.**
+
+In an initial ATmega328P-AU workflow benchmark, the Phoenix-assisted process reduced completion time from **149.2 seconds to 58.3 seconds**, representing approximately a **61% reduction in task time** for that specific scenario.
+
+> **Phoenix does not remove the engineering decision. It reduces the repetitive work surrounding that decision.**
+
+See the [Initial Workflow Benchmark](#initial-workflow-benchmark) section for details.
+
+---
+
 ## Highlights
 
 - Analyze a schematic component by designator
